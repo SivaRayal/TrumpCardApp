@@ -281,6 +281,7 @@ export function CardRevealScreen({ cardIndex, quote, onWallpaper, onBack, alread
                 <Animated.View style={[styles.cardGlow, { opacity: glowAnim }]} />
                 <CardBack width={CARD_W} height={CARD_H} />
               </View>
+              {/* Make the hint part of the touchable area so it triggers the flip */}
               {!flipped && <Text style={styles.tapHint}>✦ Tap to reveal ✦</Text>}
             </TouchableOpacity>
           </Animated.View>
@@ -295,6 +296,7 @@ export function CardRevealScreen({ cardIndex, quote, onWallpaper, onBack, alread
                 backfaceVisibility: 'hidden',
               },
             ]}
+            pointerEvents={flipped ? 'auto' : 'none'}
           >
             <View style={styles.quotedCard}>
               <LinearGradient
@@ -303,11 +305,7 @@ export function CardRevealScreen({ cardIndex, quote, onWallpaper, onBack, alread
               />
 
               {/* Faded app icon background for depth */}
-              <Image
-                source={require('../../assets/appicon.png')}
-                style={styles.cardBgIcon}
-                resizeMode="contain"
-              />
+
 
               {/* Gold border */}
               <View style={styles.quotedCardBorder} />
@@ -392,8 +390,8 @@ export function CardRevealScreen({ cardIndex, quote, onWallpaper, onBack, alread
         </Animated.View>
 
         {/* Action buttons */}
-        <Animated.View style={[styles.buttonsContainer, { opacity: btnOpacity }]}>
-          <TouchableOpacity style={styles.wallpaperBtn} onPress={onWallpaper} activeOpacity={0.85}>
+        <Animated.View style={[styles.buttonsContainer, { opacity: btnOpacity }]} pointerEvents={flipped ? 'auto' : 'none'}>
+          <TouchableOpacity style={styles.wallpaperBtn} onPress={onWallpaper} activeOpacity={0.85} disabled={!flipped}>
             <LinearGradient
               colors={['#8B6914', '#C9A84C', '#FFD700', '#C9A84C', '#8B6914']}
               style={styles.wallpaperBtnGrad}
@@ -404,7 +402,7 @@ export function CardRevealScreen({ cardIndex, quote, onWallpaper, onBack, alread
             </LinearGradient>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.backBtn} onPress={onBack} activeOpacity={0.75}>
+          <TouchableOpacity style={styles.backBtn} onPress={onBack} activeOpacity={0.75} disabled={!flipped}>
             <Text style={styles.backBtnText}>Return</Text>
           </TouchableOpacity>
         </Animated.View>
@@ -507,7 +505,7 @@ const styles = StyleSheet.create({
   cardBgIcon: {
     position: 'absolute',
     width: CARD_W * 0.7,
-    height: CARD_W * 0.7,
+    height: CARD_W * 0.9,
     opacity: 0.10,
     tintColor: Colors.gold,
   },
@@ -560,7 +558,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 18,
     alignSelf: 'center',
-    fontSize: 28,
+    fontSize: 30,
     opacity: 0.12,
   },
   quoteContainer: {
@@ -570,7 +568,7 @@ const styles = StyleSheet.create({
     zIndex: 5,
     width: '100%',
     // bounded so text never bleeds outside card
-    maxHeight: CARD_H * 0.68,
+    maxHeight: CARD_H * 0.90,
   },
   quoteOpenMark: {
     fontFamily: Typography.serifBold,

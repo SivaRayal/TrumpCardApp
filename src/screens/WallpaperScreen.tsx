@@ -186,7 +186,7 @@ export function WallpaperScreen({ cardIndex, quote, onBack }: Props) {
       >
         {/* Header */}
         <Animated.View style={[styles.header, { opacity: fadeAnim }]}>
-          <Text style={styles.headerTitle}>Wallpaper Studio</Text>
+          <Text style={styles.headerTitle}>TrumpCard</Text>
           <Text style={styles.headerSub}>High-Quality Mobile Wallpaper</Text>
           <View style={styles.divider}>
             <View style={styles.dividerLine} />
@@ -233,7 +233,7 @@ export function WallpaperScreen({ cardIndex, quote, onBack }: Props) {
               <View style={[styles.wpCardGlow, { shadowColor: isRed ? Colors.crimson : Colors.gold }]} />
 
               {/* Card */}
-              <View style={[styles.wpCard, { width: CARD_W, height: CARD_H }]}>
+              <View style={[styles.wpCard, { width: CARD_W * 1.4, height: CARD_H * 1.4 }]}>
                 <LinearGradient
                   colors={['#0D0D22', '#1A0A20', '#0A0D22']}
                   style={[StyleSheet.absoluteFill, { borderRadius: 16 }]}
@@ -286,7 +286,7 @@ export function WallpaperScreen({ cardIndex, quote, onBack }: Props) {
         <Animated.View style={[styles.actions, { opacity: btnOpacity }]}>
           <TouchableOpacity
             style={styles.saveBtn}
-            onPress={handleSave}
+            onPress={handleShare}
             activeOpacity={0.85}
             disabled={generating}
           >
@@ -299,20 +299,9 @@ export function WallpaperScreen({ cardIndex, quote, onBack }: Props) {
               {generating ? (
                 <ActivityIndicator color={Colors.backgroundDeep} />
               ) : (
-                <Text style={styles.saveBtnText}>✦ SAVE TO GALLERY ✦</Text>
+                <Text style={styles.saveBtnText}>✦ SHARE & SET as WALLPAPER ✦</Text>
               )}
             </LinearGradient>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.shareBtn}
-            onPress={handleShare}
-            activeOpacity={0.85}
-            disabled={generating}
-          >
-            <View style={styles.shareBtnInner}>
-              <Text style={styles.shareBtnText}>Share & Set as Wallpaper</Text>
-            </View>
           </TouchableOpacity>
 
           <Text style={styles.wallpaperTip}>
